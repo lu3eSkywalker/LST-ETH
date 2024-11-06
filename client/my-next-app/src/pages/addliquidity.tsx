@@ -1,15 +1,16 @@
+import AddLiquidity from "@/components/AddLiquidity";
 import Footer from "@/components/Designs/Footer";
 import Navbar from "@/components/Designs/Navbar";
-import LSTBurningTokens from "@/components/LSTBurningTokens";
 import React from "react";
 
-const lstpagetokenburn = () => {
+const addliquidity = () => {
   return (
     <div>
       <Navbar />
-      <LSTBurningTokens />
+      <AddLiquidity />
+      <Footer />
     </div>
   );
 };
 
-export default lstpagetokenburn;
+export default addliquidity;
