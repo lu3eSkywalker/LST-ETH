@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
 import TokenBurnLeftContent from "./Walkthrough/TokenBurnLeftContent";
+import { MetaMaskInpageProvider } from "@metamask/providers";
+
+declare global {
+  interface Window {
+    ethereum: MetaMaskInpageProvider;
+  }
+}
 
 const LSTBurningTokens = () => {
   const [tokensToSend, setTokensToSend] = useState<string>("");
+
+  const [loadingBar, setLoadingBar] = useState<boolean>(false);
+
+  const [tokenSendResponse, setTokenSendResponse] = useState<string>("");
 
   const ABI = [
     "function transfer(address, uint256) public returns (bool success)",
@@ -29,9 +40,19 @@ const LSTBurningTokens = () => {
         const tokenToSend = ethers.parseUnits(tokensToSend, 18);
 
         const sendTokens = await contract.transfer(ethVault, tokenToSend);
-        const res = sendTokens.wait();
+
+        setLoadingBar(true);
+        const res = await sendTokens.wait();
+        setLoadingBar(false);
+
         console.log(res.toString());
-      } catch (error: any) {
+
+        if (res.status === 1) {
+          setTokenSendResponse("Transaction Completed Successfully");
+        } else {
+          setTokenSendResponse("Error Sending Tokens");
+        }
+      } catch (error) {
         console.error("Error: ", error);
         alert("An error occurred. Check console for details.");
       }
@@ -41,26 +62,21 @@ const LSTBurningTokens = () => {
   }
 
   return (
-    <div className="">
-      <div className="flex bg-gray-100">
+    <div>
+      <div className="min-h-screen flex bg-gray-100">
         {/* Left Side Panel */}
-        <div className="w-1/2 bg-slate-600 flex items-center justify-center max-h-[1040px]">
+        <div className="w-1/2 bg-slate-600 flex items-center justify-center min-h-screen">
           <div className="text-center p-4">
             <TokenBurnLeftContent />
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="w-1/2 flex flex-col justify-center items-center h-screen bg-slate-400 max-h-[1040px]">
-          <br />
-          <br />
-          <br />
-          <br />
-
+        <div className="w-1/2 flex flex-col justify-center items-center min-h-screen bg-slate-400">
           <div className="bg-white shadow-md rounded-lg p-8 mb-6 w-[500px]">
             <div>
-              <label className="input input-bordered flex items-center gap-2 font-black text-xl my-4">
-                Address:
+              <label className="input input-bordered flex items-center gap-2 font-black text-xl my-5 border-2">
+                token_value:
                 <input
                   type="text"
                   className="grow"
@@ -71,19 +87,44 @@ const LSTBurningTokens = () => {
             </div>
 
             <button
-              onClick={() => sendTokensBack()}
+              onClick={sendTokensBack}
               className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-bold text-xl"
             >
               Send Tokens Back
             </button>
+
+            {loadingBar ? (
+              <div>
+                <br /> <br />
+                <div className="font-bold mx-[180px]">Processing...</div>
+                <div className="mx-[110px]">
+                  <progress className="progress w-56"></progress>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
+
+            {/* <div className="text-xl">{tokenSendResponse}</div> */}
+            <div
+              className={`text-xl font-bold mt-4 ${
+                tokenSendResponse === "Transaction Completed Successfully"
+                  ? "text-green-500"
+                  : "text-red-500"
+              }`}
+            >
+              {tokenSendResponse}
+            </div>
           </div>
 
+          <br />
+          <br />
           <br />
           <br />
 
           <div className="flex justify-center text-center text-white font-medium mx-5 bg-slate-700 py-6 rounded-xl w-[400px] h-[130px]">
             <ul className="steps text-xl">
-              <li className="step step-success">
+              <li className="step step-success mx-10">
                 <a className="text-white hover:text-green-400" href="./lstpage">
                   Mint Tokens
                 </a>

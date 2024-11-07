@@ -1,4 +1,3 @@
-import Footer from "@/components/Designs/Footer";
 import Navbar from "@/components/Designs/Navbar";
 import LSTBurningTokens from "@/components/LSTBurningTokens";
 import React from "react";
