@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
+import TokenBurnLeftContent from "./Walkthrough/TokenBurnLeftContent";
 
 const LSTBurningTokens = () => {
   const [tokensToSend, setTokensToSend] = useState<string>("");
@@ -43,13 +44,19 @@ const LSTBurningTokens = () => {
     <div className="">
       <div className="flex bg-gray-100">
         {/* Left Side Panel */}
-        <div className="w-1/2 bg-slate-600 flex items-center justify-center max-h-[1010px]">
+        <div className="w-1/2 bg-slate-600 flex items-center justify-center max-h-[1040px]">
           <div className="text-center p-4">
+            <TokenBurnLeftContent />
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="w-1/2 flex flex-col justify-center items-center h-screen bg-slate-400 max-h-[1010px]">
+        <div className="w-1/2 flex flex-col justify-center items-center h-screen bg-slate-400 max-h-[1040px]">
+          <br />
+          <br />
+          <br />
+          <br />
+
           <div className="bg-white shadow-md rounded-lg p-8 mb-6 w-[500px]">
             <div>
               <label className="input input-bordered flex items-center gap-2 font-black text-xl my-4">
@@ -69,6 +76,27 @@ const LSTBurningTokens = () => {
             >
               Send Tokens Back
             </button>
+          </div>
+
+          <br />
+          <br />
+
+          <div className="flex justify-center text-center text-white font-medium mx-5 bg-slate-700 py-6 rounded-xl w-[400px] h-[130px]">
+            <ul className="steps text-xl">
+              <li className="step step-success">
+                <a className="text-white hover:text-green-400" href="./lstpage">
+                  Mint Tokens
+                </a>
+              </li>
+              <li className="step step-secondary">
+                <a
+                  className="text-white hover:text-pink-400"
+                  href="./lstpagetokenburn"
+                >
+                  Get Yield Back
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

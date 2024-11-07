@@ -15,15 +15,6 @@ const Navbar = () => {
         </div>
 
         <div className="flex space-x-4 ml-auto">
-          <button className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 text-xl" onClick={() => router.push('/walkthrough')}>
-            Walkthrough
-          </button>
-          <button className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 text-xl" onClick={() => router.push('/liquiditypoolbyuser')}>
-            Liquidity Pool By a User
-          </button>
-          <button className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 text-xl" onClick={() => router.push('/getliquidityinfo')}>
-            Current Liquidity
-          </button>
         </div>
       </div>
     </nav>

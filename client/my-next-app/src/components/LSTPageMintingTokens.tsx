@@ -40,7 +40,7 @@ const LSTpage = () => {
     <div className="">
       <div className="flex bg-gray-100">
         {/* Left Side Panel */}
-        <div className="w-1/2 bg-slate-400 flex items-center justify-center max-h-[1010px]">
+        <div className="w-1/2 bg-slate-400 flex flex-col items-center justify-center max-h-[1010px]">
           <div className="bg-white shadow-md rounded-lg p-8 mb-6 w-[500px]">
             <div>
               <label className="input input-bordered flex items-center gap-2 font-black text-xl my-4">
@@ -60,6 +60,28 @@ const LSTpage = () => {
             >
               Send ETH
             </button>
+          </div>
+
+          <br />
+          <br />
+
+          {/* Steps list below the input box but outside the white box */}
+          <div className="flex justify-center text-center text-white font-medium mx-5 bg-slate-700 py-6 rounded-xl w-[400px] h-[130px]">
+            <ul className="steps text-xl">
+              <li className="step step-success">
+                <a className="text-white hover:text-green-400" href="./lstpage">
+                  Mint Tokens
+                </a>
+              </li>
+              <li className="step step-secondary">
+                <a
+                  className="text-white hover:text-pink-400"
+                  href="./lstpagetokenburn"
+                >
+                  Get Yield Back
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
