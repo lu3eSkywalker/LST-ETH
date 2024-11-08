@@ -5,7 +5,7 @@ const Redirect = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/createliquiditypool');
+    router.push('/lstpage');
   }, [router]);
 
   return null;
