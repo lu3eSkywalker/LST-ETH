@@ -1,6 +1,5 @@
 import express from "express";
 import { ethers } from "ethers";
-
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,12 +14,13 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 
 const ABI = ["function mint(address, uint256)", "function burn(uint256)"];
-
 const providers = new ethers.JsonRpcProvider(RPC_URL);
 const wallet = new ethers.Wallet(PRIVATE_KEY || "", providers);
 const contract = new ethers.Contract(CONTRACT_ADDRESS || "", ABI, wallet);
 
 const VAULT = "0x728692C4936c2b6e24300dda3190B123A669EDb3";
+
+const processedTransactions = new Set<string>();
 
 app.post("/alchemy", async (req, res) => {
   const eventData = req.body.event;
@@ -37,6 +37,14 @@ app.post("/alchemy", async (req, res) => {
     res.json({ message: "No transactions for the specified vault address" });
     return;
   }
+
+  const txHash = incomingTxs.hash;
+  if (processedTransactions.has(txHash)) {
+    res.json({ message: "Transaction already processed" });
+    return;
+  }
+
+  processedTransactions.add(txHash);
 
   const fromAddress = incomingTxs.fromAddress;
   const valueToMint = ethers.parseUnits(incomingTxs.value.toString(), 18);
